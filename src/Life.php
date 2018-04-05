@@ -5,7 +5,7 @@ namespace src;
 class Life {
 
     private $worldCells;
-    private $scores;
+    private $nbLivingCells = 0;
 
     // here we initialize the array of cells
     // 0 for a dead cell, 1 for a living one
@@ -13,12 +13,19 @@ class Life {
         for($i = 0; $i < $worldLength; $i++) {
             for($j = 0; $j < $worldLength; $j++) {
                 $this->worldCells[$i][$j] = rand(0,1);
+                if($this->worldCells[$i][$j]) {
+                    $this->nbLivingCells += 1;
+                }
             }
         }
     }
 
     public function getWorldCells() {
         return $this->worldCells;
+    }
+
+    public function getNbLivingCells() {
+        return $this->nbLivingCells;
     }
 
     // X for a dead cell, O for a living one
@@ -37,14 +44,13 @@ class Life {
 
     public function moveToNextGeneration() {
         $nextWorldCells = array();
-        $this->scores = array();
         $lengthX = count($this->worldCells);
         $lengthY = count($this->worldCells[0]);
+        $nbLivingCellsNextGen = 0;
         for($i = 0; $i < $lengthX; $i++) {
             for($j = 0; $j < $lengthY; $j++) {
                 if($i == 0 || $j == 0 || $i == $lengthX-1 || $j == $lengthY-1) {
                     $nextWorldCells[$i][$j] = $this->worldCells[$i][$j];
-                    $this->scores[$i][$j] = $this->worldCells[$i][$j];
                 } else {
                     $nbSurroundingLivingCells = 0;
                     for($k = -1; $k <= 1; $k++) {
@@ -54,31 +60,19 @@ class Life {
                             }
                         }
                     }
-                    $this->scores[$i][$j] = $nbSurroundingLivingCells;
                     $nextWorldCells[$i][$j] = ($nbSurroundingLivingCells === 3) ? 1 : 
                                                     (
                                                         ($this->worldCells[$i][$j] === 1 && $nbSurroundingLivingCells === 2) ? 1 : 0
                                                     );
                 }
+                if($nextWorldCells[$i][$j]) {
+                    $nbLivingCellsNextGen += 1;
+                }
             }
         }
 
-        echo "\n";
-        print_r($this->getSchemaScores());
-
+        $this->nbLivingCells = $nbLivingCellsNextGen;
         $this->worldCells = $nextWorldCells;
-    }
-
-    public function getSchemaScores() {
-        $schema = '';
-        for($i = 0; $i < count($this->scores); $i++) {
-            $line = '';
-            for($j = 0; $j < count($this->scores[0]); $j++) {
-                $line = trim($line . ' ' . $this->scores[$i][$j]);
-            }
-            $schema = $schema . $line . "\n";
-        }
-        return $schema;
     }
 
 }

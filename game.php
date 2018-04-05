@@ -4,15 +4,21 @@ include 'src/Life.php';
 
 use src\Life;
 
-$life = new Life(10);
+$life = new Life(30);
 
 print_r($life->getSchemaWorldCells());
-$life->moveToNextGeneration();
-print_r("\n");
-$life->getSchemaScores();
-print_r("\n");
-print_r("Go to next generation : ");
-print_r("\n");
-print_r("\n");
-print_r($life->getSchemaWorldCells());
+print_r("nb of living cells : ");
+print_r($life->getNbLivingCells());
+
+for($i = 0; $i < 100; $i++) {
+	$life->moveToNextGeneration();
+	print_r("\n");
+	print_r("Go to next generation : ");
+	print_r("\n");
+	print_r("\n");
+	print_r($life->getSchemaWorldCells());
+	print_r("nb of living cells : ");
+	print_r($life->getNbLivingCells());
+}
+
 
