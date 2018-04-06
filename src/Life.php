@@ -34,7 +34,7 @@ class Life {
         for($i = 0; $i < count($this->worldCells); $i++) {
             $line = '';
             for($j = 0; $j < count($this->worldCells[0]); $j++) {
-                $cell = $this->worldCells[$i][$j] ? 'O':'X';
+                $cell = $this->worldCells[$i][$j] ? 'O':"-";
                 $line = trim($line . ' ' . $cell);
             }
             $schema = $schema . $line . "\n";
