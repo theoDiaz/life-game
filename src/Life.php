@@ -32,14 +32,12 @@ class Life {
 
     // X for a dead cell, O for a living one
     public function getSchemaWorldCells() {
-        $schema = '';
+        $schema = array();
         for($i = 0; $i < count($this->worldCells); $i++) {
             $line = '';
             for($j = 0; $j < count($this->worldCells[0]); $j++) {
-                $cell = $this->worldCells[$i][$j] ? "O":"-";
-                $line = $line . ' ' . $cell;
+                $schema[$i][$j] = $this->worldCells[$i][$j] ? "<background_green><green>()</green></background_green>":"";
             }
-            $schema = $schema . $line . "\n";
         }
         return $schema;
     }
