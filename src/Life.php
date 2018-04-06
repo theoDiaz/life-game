@@ -6,6 +6,7 @@ class Life {
 
     private $worldCells;
     private $nbLivingCells = 0;
+    private $climate;
 
     // here we initialize the array of cells
     // 0 for a dead cell, 1 for a living one
@@ -18,6 +19,7 @@ class Life {
                 }
             }
         }
+        $this->climate = new \League\CLImate\CLImate;
     }
 
     public function getWorldCells() {
@@ -34,8 +36,8 @@ class Life {
         for($i = 0; $i < count($this->worldCells); $i++) {
             $line = '';
             for($j = 0; $j < count($this->worldCells[0]); $j++) {
-                $cell = $this->worldCells[$i][$j] ? 'O':"-";
-                $line = trim($line . ' ' . $cell);
+                $cell = $this->worldCells[$i][$j] ? "O":"-";
+                $line = $line . ' ' . $cell;
             }
             $schema = $schema . $line . "\n";
         }
